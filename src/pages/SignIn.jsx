@@ -76,7 +76,7 @@ const SignIn = () => {
 
   const redirectToGoogleSSO = async () => {
     let timer = null;
-    const googleLoginURL = "http://localhost:5000/api/v1/auth/google";
+    const googleLoginURL = import.meta.env.VITE_GOOGLE_REDIRECT;
     const newWindow = window.open(googleLoginURL, "_self");
   };
 
