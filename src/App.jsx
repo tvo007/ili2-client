@@ -11,7 +11,7 @@ function App() {
   return (
     <div className="min-w-screen min-h-screen">
       <Routes>
-        <Route path="/" element={<Projects />} />
+        <Route path="/" element={<SignIn />} />
         <Route path="/projects/:projectId" element={<Project />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/signin" element={<SignIn />} />

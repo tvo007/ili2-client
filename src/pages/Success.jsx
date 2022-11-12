@@ -25,7 +25,7 @@ const Success = () => {
       );
 
       if (setCurrentUser) {
-        navigate("/");
+        navigate("/projects");
       }
     }
   }, [me]);
