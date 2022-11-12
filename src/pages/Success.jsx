@@ -10,7 +10,7 @@ const Success = () => {
   const {
     data: me,
     isLoading,
-    isError,
+    error,
   } = useGetMeQuery("getMe", { refetchOnMountOrArgChange: true });
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const Success = () => {
     }
   }, [me]);
 
-  if (isError) {
+  if (error) {
     return <Navigate to="/signin" replace />;
   } else {
     return <div>{me && <p>Success!</p>}</div>;
