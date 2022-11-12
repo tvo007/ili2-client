@@ -16,12 +16,12 @@ import Loader from "../../components/Loader";
 
 const ProjectsSection = () => {
   const currentUser = useSelector(selectCurrentUser);
-  const { data: me, refetch } = useGetMeQuery("getMe", {
-    refetchOnFocus: true,
-  }); //testing
-  useEffect(() => {
-    refetch();
-  }, []);
+  // const { data: me, refetch } = useGetMeQuery("getMe", {
+  //   refetchOnFocus: true,
+  // }); //testing
+  // useEffect(() => {
+  //   refetch();
+  // }, []);
 
   const {
     data: projects,

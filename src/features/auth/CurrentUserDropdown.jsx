@@ -4,6 +4,7 @@ import { logOut, selectCurrentUser } from "./authSlice";
 import { useSignOutMutation } from "./authApiSlice";
 import { Menu, Transition } from "@headlessui/react";
 import { Link, useNavigate } from "react-router-dom";
+import { apiSlice } from "../api/apiSlice";
 const CurrentUserDropdown = () => {
   const currentUser = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
@@ -13,9 +14,12 @@ const CurrentUserDropdown = () => {
     useSignOutMutation();
 
   const handleLogout = async () => {
-    await signOut();
-    dispatch(logOut());
+    // dispatch(logOut()); //clears user state
+    await signOut().unwrap(); //clears cookie
+
     navigate("/signin");
+
+    // dispatch(apiSlice.util.resetApiState());
   };
 
   return (

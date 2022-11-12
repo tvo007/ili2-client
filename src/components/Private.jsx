@@ -6,7 +6,7 @@ import { selectCurrentUser } from "../features/auth/authSlice";
 const Private = ({ children }) => {
   const currentUser = useSelector(selectCurrentUser);
   if (!currentUser) {
-    return <Navigate to="/signin" replace />;
+    return <Navigate to="/success" replace />;
   } else {
     return children;
   }

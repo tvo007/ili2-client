@@ -7,7 +7,7 @@ import {
   useSignInMutation,
 } from "../features/auth/authApiSlice";
 import { useDispatch } from "react-redux";
-import { setCredentials } from "./../features/auth/authSlice";
+// import { setCredentials } from "./../features/auth/authSlice";
 import { redirect, useNavigate } from "react-router-dom";
 import googleIcon from "../assets/google-icon.svg";
 
@@ -33,7 +33,7 @@ const SignIn = () => {
     },
   });
 
-  const [signIn, { isLoading }] = useSignInMutation();
+  const [signIn, {}] = useSignInMutation();
 
   // const { data: me } = useGetMeQuery("getMe");
 
@@ -45,19 +45,8 @@ const SignIn = () => {
         password: data.password,
       });
 
-      if (login.data.id) {
-        // console.log(login);
-        // const userSetToAuth = dispatch(
-        //   setCredentials({
-        //     id: login.data.id,
-        //     name: login.data.username,
-        //     email: login.data.email,
-        //     avatar: login.data.avatar,
-        //   })
-        // );
-        // if (userSetToAuth) navigate("/");
+      if (login) {
         navigate("/success");
-        // console.log(login.data);
       }
 
       // reset({
@@ -66,7 +55,7 @@ const SignIn = () => {
       //   password: "",
       // });
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
@@ -81,7 +70,6 @@ const SignIn = () => {
   };
 
   // const { data: me } = useGetMeQuery("getMe");
-
   return (
     <section
       className="py-24 md:pt-32 bg-gray-800 min-h-screen"
