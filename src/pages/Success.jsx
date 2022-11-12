@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
+import { apiSlice } from "../features/api/apiSlice";
 import { useGetMeQuery } from "../features/auth/authApiSlice";
 import { selectCurrentUser, setCredentials } from "../features/auth/authSlice";
 
@@ -31,6 +32,7 @@ const Success = () => {
   }, [me]);
 
   if (error) {
+    dispatch(apiSlice.util.invalidateTags(["getMe"]));
     return <Navigate to="/signin" replace />;
   } else {
     return <div>{me && <p>Success!</p>}</div>;
