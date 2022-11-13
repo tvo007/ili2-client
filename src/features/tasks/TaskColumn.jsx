@@ -9,7 +9,7 @@ import { useGetBoardByProjectIdQuery } from "./tasksSlice";
 
 const TaskColumn = ({ colId, handleEditTaskButton, handleAddTaskButton }) => {
   const { projectId } = useParams();
-  const boardColumn = useSelector(selectCurrentBoard).columns.find(
+  const boardColumn = useSelector(selectCurrentBoard).order?.columns.find(
     (col) => col.id === colId
   );
 
@@ -42,7 +42,7 @@ const TaskColumn = ({ colId, handleEditTaskButton, handleAddTaskButton }) => {
         <div className="flex justify-between items-center pb-3">
           <h3 className="font-medium">{column.name}</h3>
           <span className="flex justify-center items-center w-6 h-6 rounded bg-indigo-50 text-indigo-500 text-xs">
-            {boardColumn.order.length}
+            {boardColumn?.order.length}
           </span>
         </div>
       </div>
@@ -51,9 +51,8 @@ const TaskColumn = ({ colId, handleEditTaskButton, handleAddTaskButton }) => {
         <Droppable droppableId={colId} type="div">
           {(provided) => (
             <div ref={provided.innerRef}>
-              {boardColumn.order
-                // .sort((a, b) => a.position - b.position)
-                .map((task, index) => (
+              {boardColumn?.order
+                ?.map((task, index) => (
                   <TaskCard
                     key={task.id}
                     index={index}

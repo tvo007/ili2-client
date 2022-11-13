@@ -29,8 +29,11 @@ const TasksSection = () => {
   const currentBoard = useSelector(selectCurrentBoard);
 
   useEffect(() => {
-    if (!currentBoard) {
-      dispatch(setBoard(board?.order));
+    if (
+      !currentBoard.id !== board?.id ||
+      JSON.stringify(currentBoard.order) !== JSON.stringify(board?.order)
+    ) {
+      dispatch(setBoard({ order: board?.order, id: board?.id }));
     }
   }, [board]);
   //set board state only on initial load

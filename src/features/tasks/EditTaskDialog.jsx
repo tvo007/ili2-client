@@ -51,7 +51,7 @@ const EditTaskDialog = ({ isDialogOpen, handleCloseDialog, currentTaskId }) => {
     },
   });
 
-  const [currentColumnId, setCurrentColumnId] = useState(task.column || "");
+  const [currentColumnId, setCurrentColumnId] = useState(task?.column || "");
 
   const onSubmit = async (data) => {
     try {

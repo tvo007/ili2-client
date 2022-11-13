@@ -8,8 +8,11 @@ import {
 import { Draggable } from "@hello-pangea/dnd";
 import DropDownMenu from "../../components/DropdownMenu";
 import moment from "moment";
+import { useDispatch } from "react-redux";
+import { deleteSyncTask } from "./boardSlice";
 
 const TaskCard = ({ taskId, handleEditTaskButton, index }) => {
+  const dispatch = useDispatch();
   const { projectId } = useParams();
   const {
     refetch: refetchBoard,
@@ -28,7 +31,12 @@ const TaskCard = ({ taskId, handleEditTaskButton, index }) => {
   const handleDeleteTaskButton = async () => {
     try {
       const deletedTask = await deleteTask({ taskId: task?.id }).unwrap();
-      if (deletedTask) await refetchBoard();
+      if (deletedTask) {
+        await dispatch(
+          deleteSyncTask({ sourceColId: task?.column, taskId: task?.id })
+        );
+        // await refetchBoard();
+      }
     } catch (err) {
       console.error("Failed to delete task.", err);
     }
@@ -40,22 +48,23 @@ const TaskCard = ({ taskId, handleEditTaskButton, index }) => {
         <div
           ref={provided.innerRef}
           className="p-6 mb-4 bg-white rounded shadow"
-          onClick={handleEditTaskButton}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
           {/**task status?? */}
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-6 ">
             <span className="inline-block py-1 px-2 bg-blue-50 text-xs text-blue-500 rounded-full">
               Priority Tag
             </span>
-            <DropDownMenu
-              handleEditButton={handleEditTaskButton}
-              handleDeleteButton={handleDeleteTaskButton}
-            />
+            <div>
+              <DropDownMenu
+                handleEditButton={handleEditTaskButton}
+                handleDeleteButton={handleDeleteTaskButton}
+              />
+            </div>
           </div>
           {/**task data display */}
-          <div className="mb-4">
+          <div className="mb-4" onClick={handleEditTaskButton}>
             <h3 className="mb-2 font-medium">{task?.name}</h3>
             <p className="text-sm text-gray-500">{task?.id}</p>
           </div>

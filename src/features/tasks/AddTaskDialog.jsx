@@ -9,16 +9,19 @@ import {
 } from "./tasksSlice";
 import { useGetColumnsByProjectIdQuery } from "./columnsSlice";
 import DialogWrapper from "../../components/DialogWrapper";
+import { addSyncTask, setBoard } from "./boardSlice";
+import { useDispatch } from "react-redux";
 
 const AddTaskDialog = ({ isDialogOpen, handleCloseDialog }) => {
+  const dispatch = useDispatch();
   const { projectId } = useParams();
 
-  const {
-    data: board,
-    refetch: refetchBoard,
-    isLoading: isBoardLoading,
-    isSuccess: isBoardLoaded,
-  } = useGetBoardByProjectIdQuery(projectId);
+  // const {
+  //   data: board,
+  //   refetch: refetchBoard,
+  //   isLoading: isBoardLoading,
+  //   isSuccess: isBoardLoaded,
+  // } = useGetBoardByProjectIdQuery(projectId);
 
   const { column } = useGetColumnsByProjectIdQuery(projectId, {
     selectFromResult: ({ data }) => ({
@@ -50,7 +53,14 @@ const AddTaskDialog = ({ isDialogOpen, handleCloseDialog }) => {
       if (isError) throw new Error(error);
 
       if (newTask) {
-        await refetchBoard();
+        // console.log(newTask);
+        // await refetchBoard().then((res) => console.log(res));
+        await dispatch(
+          addSyncTask({
+            targetColId: column.id,
+            taskId: newTask.id,
+          })
+        );
         handleCloseDialog(reset());
       }
 
