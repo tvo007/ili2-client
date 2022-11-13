@@ -83,6 +83,7 @@ const TasksSection = () => {
     }
   }
 
+  console.log(board);
   //drag and drop handler
   const handleDragEnd = async ({ source, destination, draggableId }) => {
     try {

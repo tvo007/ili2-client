@@ -12,6 +12,7 @@ const Success = () => {
     data: me,
     isLoading,
     error,
+    reset,
   } = useGetMeQuery("getMe", { refetchOnMountOrArgChange: true });
 
   useEffect(() => {
@@ -26,14 +27,16 @@ const Success = () => {
       );
 
       if (setCurrentUser) {
+        console.log("Works");
         navigate("/projects");
       }
     }
   }, [me]);
 
-  if (error) {
-    dispatch(apiSlice.util.invalidateTags(["getMe"]));
+  if (error && !me) {
+    // dispatch(apiSlice.util.invalidateTags(["getMe"]));
     return <Navigate to="/signin" replace />;
+    // return <div>Not working</div>;
   } else {
     return <div>{me && <p>Success!</p>}</div>;
   }

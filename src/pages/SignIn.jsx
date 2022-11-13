@@ -45,7 +45,8 @@ const SignIn = () => {
         password: data.password,
       });
 
-      if (login) {
+      if (login.data) {
+        console.log(login);
         navigate("/success");
       }
 
