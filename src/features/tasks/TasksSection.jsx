@@ -29,10 +29,7 @@ const TasksSection = () => {
   const currentBoard = useSelector(selectCurrentBoard);
 
   useEffect(() => {
-    if (
-      !currentBoard.id !== board?.id ||
-      JSON.stringify(currentBoard.order) !== JSON.stringify(board?.order)
-    ) {
+    if (!currentBoard.id !== board?.id) {
       dispatch(setBoard({ order: board?.order, id: board?.id }));
     }
   }, [board]);
