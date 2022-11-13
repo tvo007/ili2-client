@@ -1,38 +1,48 @@
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 import React from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { selectCurrentBoard } from "./boardSlice";
+import { useGetColumnsByProjectIdQuery } from "./columnsSlice";
 import TaskCard from "./TaskCard";
 import { useGetBoardByProjectIdQuery } from "./tasksSlice";
 
-const TaskColumn = ({
-  colName,
-  colId,
-  handleEditTaskButton,
-  handleAddTaskButton,
-}) => {
+const TaskColumn = ({ colId, handleEditTaskButton, handleAddTaskButton }) => {
   const { projectId } = useParams();
+  const boardColumn = useSelector(selectCurrentBoard).columns.find(
+    (col) => col.id === colId
+  );
 
-  const {
-    data: board,
-    colTasks,
-    isLoading: isBoardLoading,
-    isSuccess: isBoardLoaded,
-  } = useGetBoardByProjectIdQuery(projectId, {
+  // const {
+  //   data: board,
+  //   boardColTasks,
+  //   isLoading: isBoardLoading,
+  //   isSuccess: isBoardLoaded,
+  // } = useGetBoardByProjectIdQuery(projectId, {
+  //   selectFromResult: ({ data }) => ({
+  //     boardColTasks: data?.order?.columns
+  //       .find((col) => col.id === colId)
+  //       .order?.map((col) => col),
+  //   }),
+  // });
+
+  //get single column details
+  const { column } = useGetColumnsByProjectIdQuery(projectId, {
     selectFromResult: ({ data }) => ({
-      colTasks: data?.order?.columns
-        .find((col) => col.id === colId)
-        .order?.map((col) => col),
+      column: data.entities[colId],
     }),
   });
+
+  // console.log(column);
 
   return (
     <div className="w-full lg:w-1/3 p-4">
       {/**column header */}
       <div className="pt-3 px-6 mb-6 bg-white rounded border-t-4 border-indigo-500 shadow">
         <div className="flex justify-between items-center pb-3">
-          <h3 className="font-medium">{colName}</h3>
+          <h3 className="font-medium">{column.name}</h3>
           <span className="flex justify-center items-center w-6 h-6 rounded bg-indigo-50 text-indigo-500 text-xs">
-            {colTasks?.length}
+            {boardColumn.order.length}
           </span>
         </div>
       </div>
@@ -41,8 +51,8 @@ const TaskColumn = ({
         <Droppable droppableId={colId} type="div">
           {(provided) => (
             <div ref={provided.innerRef}>
-              {colTasks
-                .sort((a, b) => a.position - b.position)
+              {boardColumn.order
+                // .sort((a, b) => a.position - b.position)
                 .map((task, index) => (
                   <TaskCard
                     key={task.id}
@@ -50,12 +60,13 @@ const TaskColumn = ({
                     taskId={task.id}
                     handleEditTaskButton={() => handleEditTaskButton(task.id)}
                   />
-                ))}
+                ))
+                .sort((a, b) => a.position - b.position)}
               {provided.placeholder}
             </div>
           )}
         </Droppable>
-        {colName === "Todo" && (
+        {column.name === "Todo" && (
           <button
             className="flex justify-center items-center 
           py-3 border-2 border-gray-200 border-dashed hover:border-gray-500 rounded 

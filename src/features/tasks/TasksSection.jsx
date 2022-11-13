@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useDialog from "../../hooks/useDialog";
 import AddTaskDialog from "./AddTaskDialog";
@@ -12,8 +12,11 @@ import {
 import { useGetColumnsByProjectIdQuery } from "./columnsSlice";
 import { DragDropContext } from "@hello-pangea/dnd";
 import Loader from "../../components/Loader";
+import { useDispatch, useSelector } from "react-redux";
+import { moveSyncTask, selectCurrentBoard, setBoard } from "./boardSlice";
 
 const TasksSection = () => {
+  const dispatch = useDispatch();
   const { projectId } = useParams();
   const {
     data: board,
@@ -21,6 +24,19 @@ const TasksSection = () => {
     isLoading: isBoardLoading,
     isSuccess: isBoardLoaded,
   } = useGetBoardByProjectIdQuery(projectId);
+
+  //sync version of board
+  const currentBoard = useSelector(selectCurrentBoard);
+
+  useEffect(() => {
+    if (!currentBoard) {
+      dispatch(setBoard(board?.order));
+    }
+  }, [board]);
+  //set board state only on initial load
+  //should be out of sync with async board
+
+  // console.log(boardState);
 
   const {
     data: tasks,
@@ -83,7 +99,7 @@ const TasksSection = () => {
     }
   }
 
-  console.log(board);
+  // console.log(Object.values(columns.entities));
   //drag and drop handler
   const handleDragEnd = async ({ source, destination, draggableId }) => {
     try {
@@ -100,12 +116,32 @@ const TasksSection = () => {
         return;
       }
 
+      /**sync move tasks here*/
+      //Moved to the same column on different position
+      //make copy
+      //remove task from column
+      //change task position
+      await dispatch(
+        moveSyncTask({
+          taskId: draggableId,
+          targetColId: destination.droppableId,
+          sourceColId: source.droppableId,
+          targetPosition: destination.index,
+        })
+      );
+
+      /**sync move tasks here  */
+
       const triggerMoveTask = await moveTask({
         taskId: draggableId,
         targetColId: destination.droppableId,
         sourceColId: source.droppableId,
         targetPosition: destination.index,
       }).unwrap();
+
+      if (triggerMoveTask) {
+        await refetchBoard();
+      }
 
       // console.log({
       //   taskId: draggableId,
@@ -115,15 +151,10 @@ const TasksSection = () => {
       //   projectId: projectId,
       // });
 
-      if (triggerMoveTask) {
-        await refetchBoard();
-      }
-
       // toast.success("Card moved!");
-      console.log("Card moved!");
     } catch (err) {
       console.error(err);
-      toast.error("Something went wrong!");
+      // toast.error("Something went wrong!");
     }
   };
 
@@ -141,10 +172,9 @@ const TasksSection = () => {
           <DragDropContext onDragEnd={handleDragEnd}>
             <div className="container px-4 mx-auto">
               <div className="flex flex-wrap -m-4">
-                {columns?.map((col) => (
+                {board?.order.columns.map((col) => (
                   <TaskColumn
                     colId={col.id}
-                    colName={col.name}
                     key={col.id}
                     handleAddTaskButton={handleAddTaskButton}
                     handleEditTaskButton={handleEditTaskButton}

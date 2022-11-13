@@ -57,7 +57,7 @@ const TaskCard = ({ taskId, handleEditTaskButton, index }) => {
           {/**task data display */}
           <div className="mb-4">
             <h3 className="mb-2 font-medium">{task?.name}</h3>
-            <p className="text-sm text-gray-500">{task?.desc}</p>
+            <p className="text-sm text-gray-500">{task?.id}</p>
           </div>
           {/**misc data like name, data created, due date */}
           <div className="flex justify-between">

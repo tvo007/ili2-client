@@ -12,7 +12,7 @@ const TopNav = () => {
         <div className="p-6 xl:px-48 flex items-center bg-gray-800">
           <Link
             className="flex-shrink-0 mr-12 text-2xl text-white font-semibold hover:cursor-pointer"
-            to="/"
+            to="/projects"
           >
             ILIRA
           </Link>

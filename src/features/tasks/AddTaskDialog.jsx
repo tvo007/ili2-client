@@ -22,9 +22,11 @@ const AddTaskDialog = ({ isDialogOpen, handleCloseDialog }) => {
 
   const { column } = useGetColumnsByProjectIdQuery(projectId, {
     selectFromResult: ({ data }) => ({
-      column: data?.find((col) => col.name === "Todo"),
+      column: Object.values(data.entities).find((col) => col.name === "Todo"),
     }),
   });
+
+  //data?.find((col) => col.name === "Todo")
 
   const [addNewTask, { isSuccess, isError, error }] = useAddNewTaskMutation();
 

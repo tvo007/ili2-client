@@ -11,24 +11,18 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getColumnsByProjectId: builder.query({
       query: (projectId) => `/columns/project/${projectId}`,
-      transformResponse: (response, meta, arg) => response,
-      providesTags: (result, error, id) => [{ type: "Columns", id }],
+      transformResponse: (responseData) => {
+        const loadedColumns = responseData.map((column) => {
+          //map logic would go here
+          return column;
+        });
+        return columnsAdapter.setAll(initialState, loadedColumns);
+      },
+      providesTags: (result, error, arg) => [
+        { type: "Column", id: "LIST" },
+        ...result.ids.map((id) => ({ type: "Column", id })),
+      ],
     }),
-    // getColumnsByProjectId: builder.query({
-    //   query: (projectId) => `/columns/project/${projectId}`,
-    //   transformResponse: (responseData) => {
-    //     const loadedColumns = responseData.map((col) => {
-    //       //map logic would go here
-    //       return col;
-    //     });
-
-    //     return columnsAdapter.setAll(initialState, loadedColumns);
-    //   },
-    //   providesTags: (result, error, arg) => [
-    //     { type: "Column", id: "LIST" },
-    //     ...result.ids.map((id) => ({ type: "Column", id })),
-    //   ],
-    // }),
   }),
 });
 
