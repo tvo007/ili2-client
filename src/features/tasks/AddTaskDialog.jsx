@@ -16,12 +16,12 @@ const AddTaskDialog = ({ isDialogOpen, handleCloseDialog }) => {
   const dispatch = useDispatch();
   const { projectId } = useParams();
 
-  // const {
-  //   data: board,
-  //   refetch: refetchBoard,
-  //   isLoading: isBoardLoading,
-  //   isSuccess: isBoardLoaded,
-  // } = useGetBoardByProjectIdQuery(projectId);
+  const {
+    data: board,
+    refetch: refetchBoard,
+    isLoading: isBoardLoading,
+    isSuccess: isBoardLoaded,
+  } = useGetBoardByProjectIdQuery(projectId);
 
   const { column } = useGetColumnsByProjectIdQuery(projectId, {
     selectFromResult: ({ data }) => ({
