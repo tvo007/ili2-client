@@ -32,10 +32,10 @@ const TaskCard = ({ taskId, handleEditTaskButton, index }) => {
     try {
       const deletedTask = await deleteTask({ taskId: task?.id }).unwrap();
       if (deletedTask) {
+        await refetchBoard();
         await dispatch(
           deleteSyncTask({ sourceColId: task?.column, taskId: task?.id })
         );
-        // await refetchBoard();
       }
     } catch (err) {
       console.error("Failed to delete task.", err);
