@@ -53,15 +53,15 @@ const AddTaskDialog = ({ isDialogOpen, handleCloseDialog }) => {
       if (isError) throw new Error(error);
 
       if (newTask) {
-        // console.log(newTask);
-        // await refetchBoard().then((res) => console.log(res));
-        await refetchBoard();
         await dispatch(
           addSyncTask({
             targetColId: column.id,
             taskId: newTask.id,
           })
         );
+        // console.log(newTask);
+        // await refetchBoard().then((res) => console.log(res));
+        await refetchBoard();
         handleCloseDialog(reset());
       }
 
