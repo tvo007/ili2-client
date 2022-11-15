@@ -11,6 +11,8 @@ import { useGetColumnsByProjectIdQuery } from "./columnsSlice";
 import DialogWrapper from "../../components/DialogWrapper";
 import { addSyncTask, setBoard } from "./boardSlice";
 import { useDispatch } from "react-redux";
+import Loader from "../../components/Loader";
+import MiniLoader from "../../components/MiniLoader";
 
 const AddTaskDialog = ({ isDialogOpen, handleCloseDialog }) => {
   const dispatch = useDispatch();
@@ -31,7 +33,8 @@ const AddTaskDialog = ({ isDialogOpen, handleCloseDialog }) => {
 
   //data?.find((col) => col.name === "Todo")
 
-  const [addNewTask, { isSuccess, isError, error }] = useAddNewTaskMutation();
+  const [addNewTask, { isSuccess, isError, error, isLoading }] =
+    useAddNewTaskMutation();
 
   const {
     register,
@@ -130,11 +133,12 @@ const AddTaskDialog = ({ isDialogOpen, handleCloseDialog }) => {
           >
             Cancel
           </button>
+
           <button
             type="submit"
-            className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+            className="w-[6rem] inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
           >
-            Add Task
+            {isLoading ? <MiniLoader /> : "Add Task"}
           </button>
         </div>
       </form>
