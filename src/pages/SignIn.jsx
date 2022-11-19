@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 // import { setCredentials } from "./../features/auth/authSlice";
 import { redirect, useNavigate } from "react-router-dom";
 import googleIcon from "../assets/google-icon.svg";
+import MiniLoader from "../components/MiniLoader";
 
 const SignIn = () => {
   // const redirectToGoogleSSO = async () => {
@@ -33,7 +34,7 @@ const SignIn = () => {
     },
   });
 
-  const [signIn, {}] = useSignInMutation();
+  const [signIn, { isLoading }] = useSignInMutation();
 
   // const { data: me } = useGetMeQuery("getMe");
 
@@ -151,7 +152,14 @@ const SignIn = () => {
                 className="inline-block py-3 px-7 mb-4 w-full text-base text-blue-50 font-medium text-center leading-6 bg-blue-500 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md shadow-sm"
                 type="submit"
               >
-                Sign In
+                {isLoading ? (
+                  <span className="flex flex-row space-x-2 justify-center">
+                    <MiniLoader isWhite />
+                    <p>Signing you in...</p>
+                  </span>
+                ) : (
+                  "Sign In"
+                )}
               </button>
             </form>
             <div className="h-full flex flex-col justify-center">
