@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
     <section className="overflow-hidden">
       <div className="flex flex-row ">
         <Drawer />
-        <div className="w-screen bg-gray-50">
+        <div className="w-screen h-screen bg-gray-50">
           <TopNav />
           <div className="pt-[4rem]">{children}</div>
         </div>

@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { redirect, useNavigate } from "react-router-dom";
 import googleIcon from "../assets/google-icon.svg";
 import MiniLoader from "../components/MiniLoader";
+import { apiSlice } from "../features/api/apiSlice";
 
 const SignIn = () => {
   // const redirectToGoogleSSO = async () => {
@@ -34,7 +35,7 @@ const SignIn = () => {
     },
   });
 
-  const [signIn, { isLoading }] = useSignInMutation();
+  const [signIn, { isLoading, isSuccess }] = useSignInMutation();
 
   // const { data: me } = useGetMeQuery("getMe");
 
@@ -46,7 +47,7 @@ const SignIn = () => {
         password: data.password,
       }).unwrap();
 
-      console.log(login);
+      // console.log(login);
       navigate("/");
 
       // reset({
@@ -59,9 +60,9 @@ const SignIn = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (me?.user) navigate("/success");
-  // }, [me]);
+  useEffect(() => {
+    dispatch(apiSlice.util.resetApiState());
+  }, []);
 
   const redirectToGoogleSSO = async () => {
     let timer = null;
