@@ -80,6 +80,7 @@ const AddTaskDialog = ({ isDialogOpen, handleCloseDialog }) => {
     } catch (error) {
       console.error("Failed to create new task.", error);
     } finally {
+      await refetchBoard();
       handleCloseDialog(reset());
     }
   };
