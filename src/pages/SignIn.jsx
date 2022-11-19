@@ -44,12 +44,10 @@ const SignIn = () => {
       const login = await signIn({
         email: data.email,
         password: data.password,
-      });
+      }).unwrap();
 
-      if (login.data) {
-        console.log(login);
-        navigate("/");
-      }
+      console.log(login);
+      navigate("/");
 
       // reset({
       //   name: "",
