@@ -84,10 +84,14 @@ const ProjectsSection = () => {
     }
   }
 
+  if (isError) {
+    return <div>Something went wrong.</div>;
+  }
+
   return (
     <div className="min-h-screen">
       <ProjectsHeader handleAddProjectButton={handleAddProjectButton} />
-      {isLoading || isError ? (
+      {isLoading ? (
         <Loader />
       ) : (
         projects?.ids.map((id) => (

@@ -48,7 +48,7 @@ const SignIn = () => {
 
       if (login.data) {
         console.log(login);
-        navigate("/success");
+        navigate("/");
       }
 
       // reset({
