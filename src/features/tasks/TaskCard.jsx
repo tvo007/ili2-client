@@ -11,7 +11,7 @@ import moment from "moment";
 import { useDispatch } from "react-redux";
 import { deleteSyncTask } from "./boardSlice";
 
-const TaskCard = ({ taskId, handleEditTaskButton, index }) => {
+const TaskCard = ({ handleEditTaskButton, index, taskKey }) => {
   const dispatch = useDispatch();
   const { projectId } = useParams();
   const {
@@ -20,9 +20,16 @@ const TaskCard = ({ taskId, handleEditTaskButton, index }) => {
     isSuccess: isBoardLoaded,
   } = useGetBoardByProjectIdQuery(projectId);
 
+  //sort task by key
+  // const { task } = useGetTasksByProjectIdQuery(projectId, {
+  //   selectFromResult: ({ data }) => ({
+  //     task: data?.entities[taskId],
+  //   }),
+  // });
+
   const { task } = useGetTasksByProjectIdQuery(projectId, {
     selectFromResult: ({ data }) => ({
-      task: data?.entities[taskId],
+      task: Object.values(data?.entities).find((task) => task.key === taskKey),
     }),
   });
 
@@ -43,7 +50,7 @@ const TaskCard = ({ taskId, handleEditTaskButton, index }) => {
   };
 
   return (
-    <Draggable draggableId={taskId} key={taskId} index={index}>
+    <Draggable draggableId={taskKey} key={taskKey} index={index}>
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
@@ -66,7 +73,8 @@ const TaskCard = ({ taskId, handleEditTaskButton, index }) => {
           {/**task data display */}
           <div className="mb-4" onClick={handleEditTaskButton}>
             <h3 className="mb-2 font-medium">{task?.name}</h3>
-            <p className="text-sm text-gray-500">{task?.id}</p>
+            <p className="text-sm text-gray-500">ID: {task?.id}</p>
+            <p className="text-sm text-gray-500">Key: {task?.key}</p>
           </div>
           {/**misc data like name, data created, due date */}
           <div className="flex justify-between">

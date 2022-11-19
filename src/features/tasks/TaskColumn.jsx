@@ -54,10 +54,10 @@ const TaskColumn = ({ colId, handleEditTaskButton, handleAddTaskButton }) => {
               {boardColumn?.order
                 ?.map((task, index) => (
                   <TaskCard
-                    key={task.id}
+                    key={task.key}
                     index={index}
-                    taskId={task.id}
-                    handleEditTaskButton={() => handleEditTaskButton(task.id)}
+                    taskKey={task.key}
+                    handleEditTaskButton={() => handleEditTaskButton(task.key)}
                   />
                 ))
                 .sort((a, b) => a.position - b.position)}
