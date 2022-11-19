@@ -33,7 +33,11 @@ const Success = () => {
     }
   }, [me]);
 
-  if (error && !me) {
+  if (isLoading) {
+    return <div>Logging you in. Please wait.</div>;
+  }
+
+  if (error) {
     // dispatch(apiSlice.util.invalidateTags(["getMe"]));
     return <Navigate to="/signin" replace />;
     // return <div>Not working</div>;
