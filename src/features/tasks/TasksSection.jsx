@@ -57,7 +57,7 @@ const TasksSection = () => {
   } = useGetColumnsByProjectIdQuery(projectId, {});
 
   const [moveTask, { isLoading: isUpdatingBoard }] = useMoveTaskMutation();
-  const [currentTaskId, setCurrentTaskId] = useState("");
+  const [currentTaskKey, setCurrentTaskKey] = useState("");
   const { handleOpenDialog, handleCloseDialog, isDialogOpen } = useDialog();
 
   const handleAddTaskButton = () => {
@@ -65,7 +65,7 @@ const TasksSection = () => {
   };
 
   const handleEditTaskButton = (id) => {
-    setCurrentTaskId(id);
+    setCurrentTaskKey(id);
     handleOpenDialog(setActiveDialog(1));
   };
 
@@ -87,7 +87,7 @@ const TasksSection = () => {
       case 1:
         return (
           <EditTaskDialog
-            currentTaskId={currentTaskId}
+            currentTaskKey={currentTaskKey}
             isDialogOpen={isDialogOpen}
             handleCloseDialog={handleClose}
           />
@@ -126,7 +126,7 @@ const TasksSection = () => {
       //change task position
       await dispatch(
         moveSyncTask({
-          taskId: draggableId,
+          taskKey: draggableId,
           targetColId: destination.droppableId,
           sourceColId: source.droppableId,
           targetPosition: destination.index,
@@ -136,7 +136,7 @@ const TasksSection = () => {
       /**sync move tasks here  */
 
       const triggerMoveTask = await moveTask({
-        taskId: draggableId,
+        taskKey: draggableId,
         targetColId: destination.droppableId,
         sourceColId: source.droppableId,
         targetPosition: destination.index,

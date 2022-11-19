@@ -4,10 +4,10 @@ import TopNav from "./TopNav";
 
 const Layout = ({ children }) => {
   return (
-    <section className="overflow-hidden">
-      <div className="flex flex-row ">
+    <section className="h-[100%] bg-gray-100">
+      <div className="flex flex-row">
         <Drawer />
-        <div className="w-screen h-screen bg-gray-50">
+        <div className="w-screen">
           <TopNav />
           <div className="pt-[4rem]">{children}</div>
         </div>

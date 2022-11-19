@@ -15,7 +15,11 @@ import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import MiniLoader from "../../components/MiniLoader";
 
-const EditTaskDialog = ({ isDialogOpen, handleCloseDialog, currentTaskId }) => {
+const EditTaskDialog = ({
+  isDialogOpen,
+  handleCloseDialog,
+  currentTaskKey,
+}) => {
   const { projectId } = useParams();
   const {
     data: board,
@@ -27,7 +31,9 @@ const EditTaskDialog = ({ isDialogOpen, handleCloseDialog, currentTaskId }) => {
     projectId,
     {
       selectFromResult: ({ data, isLoading }) => ({
-        task: data?.entities[currentTaskId],
+        task: Object.values(data?.entities).find(
+          (task) => task.key === currentTaskKey
+        ),
         isLoading,
       }),
     }

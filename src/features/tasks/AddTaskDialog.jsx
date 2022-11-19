@@ -13,6 +13,7 @@ import { addSyncTask, setBoard } from "./boardSlice";
 import { useDispatch } from "react-redux";
 import Loader from "../../components/Loader";
 import MiniLoader from "../../components/MiniLoader";
+import { nanoid } from "@reduxjs/toolkit";
 
 const AddTaskDialog = ({ isDialogOpen, handleCloseDialog }) => {
   const dispatch = useDispatch();
@@ -46,27 +47,27 @@ const AddTaskDialog = ({ isDialogOpen, handleCloseDialog }) => {
 
   const onSubmit = async (data) => {
     try {
-      const newTask = await addNewTask({
+      let newKey = nanoid();
+      await dispatch(
+        addSyncTask({
+          targetColId: column.id,
+          taskKey: newKey,
+        })
+      );
+      await addNewTask({
         name: data.name,
         desc: data.desc,
         projectId: projectId,
         columnId: column.id,
+        key: newKey,
       }).unwrap();
 
       if (isError) throw new Error(error);
 
-      if (newTask) {
-        await dispatch(
-          addSyncTask({
-            targetColId: column.id,
-            taskId: newTask.id,
-          })
-        );
-        // console.log(newTask);
-        // await refetchBoard().then((res) => console.log(res));
-        await refetchBoard();
-        handleCloseDialog(reset());
-      }
+      // console.log(newTask);
+      // await refetchBoard().then((res) => console.log(res));
+
+      handleCloseDialog(reset());
 
       // const test = {
       //   name: data.name,
@@ -79,7 +80,7 @@ const AddTaskDialog = ({ isDialogOpen, handleCloseDialog }) => {
     } catch (error) {
       console.error("Failed to create new task.", error);
     } finally {
-      reset();
+      handleCloseDialog(reset());
     }
   };
   return (

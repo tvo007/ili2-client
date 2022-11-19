@@ -10,7 +10,7 @@ const boardSlice = createSlice({
       state.id = id;
     },
     moveSyncTask(state, action) {
-      const { taskId, targetColId, sourceColId, targetPosition } =
+      const { taskKey, targetColId, sourceColId, targetPosition } =
         action.payload;
 
       let boardCopyColumns = JSON.parse(
@@ -22,9 +22,11 @@ const boardSlice = createSlice({
           (col) => col.id === sourceColId
         );
         let sourceCol = boardCopyColumns[sourceColIndex];
-        sourceCol.order = sourceCol.order.filter((col) => col.id !== taskId);
-        sourceCol.order = sourceCol.order.map((col, index) => ({
-          ...col,
+        sourceCol.order = sourceCol.order.filter(
+          (task) => task.key !== taskKey
+        );
+        sourceCol.order = sourceCol.order.map((task, index) => ({
+          ...task,
           position: index,
         }));
       }
@@ -35,19 +37,19 @@ const boardSlice = createSlice({
 
       let targetCol = boardCopyColumns[targetColIndex];
 
-      targetCol.order = targetCol.order.filter((col) => col.id !== taskId);
+      targetCol.order = targetCol.order.filter((task) => task.key !== taskKey);
       targetCol.order.splice(targetPosition, 0, {
-        id: taskId,
+        key: taskKey,
       });
-      targetCol.order = targetCol.order.map((col, index) => ({
-        ...col,
+      targetCol.order = targetCol.order.map((task, index) => ({
+        ...task,
         position: index,
       }));
 
       state.order = { columns: boardCopyColumns };
     },
     addSyncTask(state, action) {
-      const { targetColId, taskId } = action.payload;
+      const { targetColId, taskKey } = action.payload;
       let boardCopyColumns = JSON.parse(
         JSON.stringify(current(state.order.columns))
       );
@@ -58,7 +60,7 @@ const boardSlice = createSlice({
 
       let targetCol = boardCopyColumns[targetColIndex];
       targetCol.order.push({
-        id: taskId,
+        key: taskKey,
         position: targetCol.order.length,
       });
 
@@ -66,7 +68,7 @@ const boardSlice = createSlice({
     },
 
     deleteSyncTask(state, action) {
-      const { sourceColId, taskId } = action.payload;
+      const { sourceColId, taskKey } = action.payload;
       let boardCopyColumns = JSON.parse(
         JSON.stringify(current(state.order.columns))
       );
@@ -74,9 +76,9 @@ const boardSlice = createSlice({
         (col) => col.id === sourceColId
       );
       let sourceCol = boardCopyColumns[sourceColIndex];
-      sourceCol.order = sourceCol.order.filter((col) => col.id !== taskId);
-      sourceCol.order = sourceCol.order.map((col, index) => ({
-        ...col,
+      sourceCol.order = sourceCol.order.filter((task) => task.key !== taskKey);
+      sourceCol.order = sourceCol.order.map((task, index) => ({
+        ...task,
         position: index,
       }));
 

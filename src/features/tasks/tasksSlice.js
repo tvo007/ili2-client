@@ -22,6 +22,10 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         { type: "Task", id: "LIST" },
         ...result.ids.map((id) => ({ type: "Task", id })),
       ],
+      // providesTags: (result, error, arg) => [
+      //   { type: "Task", key: "KEYS" },
+      //   ...result.keys.map((key) => ({ type: "Task", key })),
+      // ],
     }),
 
     getBoardByProjectId: builder.query({
@@ -73,7 +77,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
     }),
     moveTask: builder.mutation({
       query: (data) => ({
-        url: `/tasks/${data.taskId}`,
+        url: `/tasks/key/${data.taskKey}`,
         method: "PATCH",
         body: {
           sourceColId: data.sourceColId,
