@@ -54,7 +54,7 @@ const AddTaskDialog = ({ isDialogOpen, handleCloseDialog }) => {
           taskKey: newKey,
         })
       );
-      await addNewTask({
+      const newTask = await addNewTask({
         name: data.name,
         desc: data.desc,
         projectId: projectId,
@@ -63,6 +63,10 @@ const AddTaskDialog = ({ isDialogOpen, handleCloseDialog }) => {
       }).unwrap();
 
       if (isError) throw new Error(error);
+
+      if (newTask) {
+        await refetchBoard();
+      }
 
       // console.log(newTask);
       // await refetchBoard().then((res) => console.log(res));
@@ -80,7 +84,6 @@ const AddTaskDialog = ({ isDialogOpen, handleCloseDialog }) => {
     } catch (error) {
       console.error("Failed to create new task.", error);
     } finally {
-      await refetchBoard();
       handleCloseDialog(reset());
     }
   };
