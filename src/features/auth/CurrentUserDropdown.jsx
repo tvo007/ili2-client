@@ -22,6 +22,10 @@ const CurrentUserDropdown = () => {
     // dispatch(apiSlice.util.resetApiState());
   };
 
+  if (!currentUser) {
+    return <div />;
+  }
+
   return (
     <Menu as="div" className="">
       <Menu.Button className="flex items-center">
