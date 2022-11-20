@@ -24,7 +24,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
           }));
 
           // console.log(data.entities);
-          console.log(clientData);
+          // console.log(clientData);
           // console.log(Object.values(data.entities));
           dispatch(setBoardTasks({ data: clientData }));
         } catch (err) {

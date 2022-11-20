@@ -84,7 +84,7 @@ const boardSlice = createSlice({
         desc: desc,
         column: targetColId,
       });
-      console.log("If you are reading this, things went well!");
+      // console.log("If you are reading this, things went well!");
     },
 
     deleteSyncTask(state, action) {
