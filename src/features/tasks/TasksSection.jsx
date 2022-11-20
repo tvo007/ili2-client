@@ -32,7 +32,9 @@ const TasksSection = () => {
     refetch: refetchBoard,
     isLoading: isBoardLoading,
     isSuccess: isBoardLoaded,
-  } = useGetBoardByProjectIdQuery(projectId);
+  } = useGetBoardByProjectIdQuery(projectId, {
+    refetchOnMountOrArgChange: true,
+  });
 
   //sync version of board
   const currentBoard = useSelector(selectCurrentBoard);
@@ -129,7 +131,7 @@ const TasksSection = () => {
 
       await refetchBoard();
     };
-    
+
     if (taskFormData.isEmpty !== true) {
       console.log("Process being run");
       createAsyncTask().catch(console.log(error));

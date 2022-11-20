@@ -43,7 +43,7 @@ const TaskCard = ({ handleEditTaskButton, index, taskKey }) => {
       );
       await deleteTask({ taskId: task?.id }).unwrap();
       await refetchBoard();
-      console.log(board);
+      // await dispatch(setBoard({ order: board?.order, id: board?.id }));
     } catch (err) {
       console.error("Failed to delete task.", err);
     }
