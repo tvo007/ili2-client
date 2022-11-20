@@ -182,7 +182,7 @@ const EditTaskDialog = ({
                                 selected ? "font-medium" : "font-normal"
                               }`}
                             >
-                              {columns.entities[colId]}
+                              {columns.entities[colId].name}
                             </span>
                             {task.column === colId ? (
                               <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-blue-600">
