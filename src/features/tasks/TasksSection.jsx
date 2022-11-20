@@ -50,6 +50,10 @@ const TasksSection = () => {
     }
   }, [board]);
 
+  useEffect(() => {
+    dispatch(setBoard({ order: board?.order, id: board?.id }));
+  }, [refetchBoard]);
+
   //set board state only on initial load
   //should be out of sync with async board
 
