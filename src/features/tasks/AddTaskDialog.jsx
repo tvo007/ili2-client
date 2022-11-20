@@ -54,7 +54,7 @@ const AddTaskDialog = ({ isDialogOpen, handleCloseDialog }) => {
           taskKey: newKey,
         })
       );
-      const newTask = await addNewTask({
+      await addNewTask({
         name: data.name,
         desc: data.desc,
         projectId: projectId,
@@ -64,14 +64,10 @@ const AddTaskDialog = ({ isDialogOpen, handleCloseDialog }) => {
 
       if (isError) throw new Error(error);
 
-      if (newTask) {
-        await refetchBoard();
-      }
+      handleCloseDialog(reset());
 
       // console.log(newTask);
       // await refetchBoard().then((res) => console.log(res));
-
-      handleCloseDialog(reset());
 
       // const test = {
       //   name: data.name,
