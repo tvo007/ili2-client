@@ -14,7 +14,12 @@ import { useGetColumnsByProjectIdQuery } from "./columnsSlice";
 import { DragDropContext } from "@hello-pangea/dnd";
 import Loader from "../../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
-import { moveSyncTask, selectCurrentBoard, setBoard } from "./boardSlice";
+import {
+  clearBoard,
+  moveSyncTask,
+  selectCurrentBoard,
+  setBoard,
+} from "./boardSlice";
 
 const initialTaskFormData = {
   name: "",
@@ -40,6 +45,10 @@ const TasksSection = () => {
   const currentBoard = useSelector(selectCurrentBoard);
 
   const [addNewTask, {}] = useAddNewTaskMutation();
+
+  useEffect(() => {
+    dispatch(clearBoard());
+  }, []);
 
   useEffect(() => {
     if (

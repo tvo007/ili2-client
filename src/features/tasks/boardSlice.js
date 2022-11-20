@@ -9,6 +9,12 @@ const boardSlice = createSlice({
       state.order = order;
       state.id = id;
     },
+
+    clearBoard: (state, action) => {
+      state.order = null;
+      state.id = null;
+    },
+
     moveSyncTask(state, action) {
       const { taskKey, targetColId, sourceColId, targetPosition } =
         action.payload;
@@ -87,8 +93,13 @@ const boardSlice = createSlice({
   },
 });
 
-export const { setBoard, moveSyncTask, addSyncTask, deleteSyncTask } =
-  boardSlice.actions;
+export const {
+  setBoard,
+  moveSyncTask,
+  addSyncTask,
+  deleteSyncTask,
+  clearBoard,
+} = boardSlice.actions;
 
 export default boardSlice.reducer;
 
