@@ -129,6 +129,7 @@ const TasksSection = () => {
 
       await refetchBoard();
     };
+    
     if (taskFormData.isEmpty !== true) {
       console.log("Process being run");
       createAsyncTask().catch(console.log(error));

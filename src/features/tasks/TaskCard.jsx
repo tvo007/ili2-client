@@ -37,13 +37,11 @@ const TaskCard = ({ handleEditTaskButton, index, taskKey }) => {
 
   const handleDeleteTaskButton = async () => {
     try {
-      const deletedTask = await deleteTask({ taskId: task?.id }).unwrap();
-      if (deletedTask) {
-        await refetchBoard();
-        await dispatch(
-          deleteSyncTask({ sourceColId: task?.column, taskId: task?.id })
-        );
-      }
+      await dispatch(
+        deleteSyncTask({ sourceColId: task?.column, taskId: task?.id })
+      );
+      await deleteTask({ taskId: task?.id }).unwrap();
+      await refetchBoard();
     } catch (err) {
       console.error("Failed to delete task.", err);
     }
