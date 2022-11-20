@@ -5,6 +5,7 @@ import AddTaskDialog from "./AddTaskDialog";
 import EditTaskDialog from "./EditTaskDialog";
 import TaskColumn from "./TaskColumn";
 import {
+  useAddNewTaskMutation,
   useGetBoardByProjectIdQuery,
   useGetTasksByProjectIdQuery,
   useMoveTaskMutation,
@@ -15,6 +16,14 @@ import Loader from "../../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { moveSyncTask, selectCurrentBoard, setBoard } from "./boardSlice";
 
+const initialTaskFormData = {
+  name: "",
+  desc: "",
+  projectId: "",
+  columnId: "",
+  key: "",
+  isEmpty: true,
+};
 const TasksSection = () => {
   const dispatch = useDispatch();
   const { projectId } = useParams();
@@ -28,6 +37,8 @@ const TasksSection = () => {
   //sync version of board
   const currentBoard = useSelector(selectCurrentBoard);
 
+  const [addNewTask, {}] = useAddNewTaskMutation();
+
   useEffect(() => {
     if (
       !currentBoard.id !== board?.id ||
@@ -36,6 +47,7 @@ const TasksSection = () => {
       dispatch(setBoard({ order: board?.order, id: board?.id }));
     }
   }, [board]);
+
   //set board state only on initial load
   //should be out of sync with async board
 
@@ -57,8 +69,9 @@ const TasksSection = () => {
   } = useGetColumnsByProjectIdQuery(projectId, {});
 
   const [moveTask, { isLoading: isUpdatingBoard }] = useMoveTaskMutation();
-  const [currentTaskKey, setCurrentTaskKey] = useState("");
   const { handleOpenDialog, handleCloseDialog, isDialogOpen } = useDialog();
+  const [currentTaskKey, setCurrentTaskKey] = useState("");
+  const [taskFormData, setTaskFormData] = useState(initialTaskFormData);
 
   const handleAddTaskButton = () => {
     handleOpenDialog(setActiveDialog(0));
@@ -83,6 +96,7 @@ const TasksSection = () => {
           <AddTaskDialog
             isDialogOpen={isDialogOpen}
             handleCloseDialog={handleClose}
+            setTaskFormData={setTaskFormData}
           />
         );
       case 1:
@@ -102,6 +116,28 @@ const TasksSection = () => {
         );
     }
   }
+
+  useEffect(() => {
+    const createAsyncTask = async () => {
+      await addNewTask({
+        name: taskFormData.name,
+        desc: taskFormData.desc,
+        projectId: taskFormData.projectId,
+        columnId: taskFormData.columnId,
+        key: taskFormData.key,
+      }).unwrap();
+
+      await refetchBoard();
+    };
+    if (taskFormData.isEmpty !== true) {
+      console.log("Process being run");
+      createAsyncTask().catch(console.log(error));
+      setTaskFormData(initialTaskFormData);
+      console.log("Process successful.");
+    }
+  }, [taskFormData]);
+
+  // console.log(taskFormData);
 
   // console.log(Object.values(columns.entities));
   //drag and drop handler
@@ -162,11 +198,6 @@ const TasksSection = () => {
     }
   };
 
-  // function order(a, b) {
-  //   return a.position < b.position ? -1 : a.position > b.position ? 1 : 0;
-  // }
-
-  // console.log(board);
   return (
     <section>
       <div>{isLoading && !isTasksLoaded && !isColLoaded && <Loader />}</div>
@@ -187,12 +218,6 @@ const TasksSection = () => {
               </div>
             </div>
           </DragDropContext>
-          {/* <AddTaskForm /> */}
-          {/* <EditTaskDialog
-        isDialogOpen={isDialogOpen}
-        handleCloseDialog={handleCloseDialog}
-        currentTaskId={currentTaskId}
-      /> */}
           {getDialog(activeDialog)}
         </div>
       )}

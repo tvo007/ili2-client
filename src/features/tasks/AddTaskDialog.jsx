@@ -15,7 +15,11 @@ import Loader from "../../components/Loader";
 import MiniLoader from "../../components/MiniLoader";
 import { nanoid } from "@reduxjs/toolkit";
 
-const AddTaskDialog = ({ isDialogOpen, handleCloseDialog }) => {
+const AddTaskDialog = ({
+  isDialogOpen,
+  handleCloseDialog,
+  setTaskFormData,
+}) => {
   const dispatch = useDispatch();
   const { projectId } = useParams();
 
@@ -54,12 +58,21 @@ const AddTaskDialog = ({ isDialogOpen, handleCloseDialog }) => {
           taskKey: newKey,
         })
       );
-      await addNewTask({
+      // await addNewTask({
+      //   name: data.name,
+      //   desc: data.desc,
+      //   projectId: projectId,
+      //   columnId: column.id,
+      //   key: newKey,
+      // });
+
+      setTaskFormData({
         name: data.name,
         desc: data.desc,
         projectId: projectId,
         columnId: column.id,
         key: newKey,
+        isEmpty: false,
       });
 
       handleCloseDialog(reset());
