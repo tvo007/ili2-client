@@ -69,8 +69,9 @@ const TasksSection = () => {
     handleOpenDialog(setActiveDialog(1));
   };
 
-  const handleClose = () => {
+  const handleClose = async () => {
     handleCloseDialog();
+    await refetchBoard();
   };
 
   const [activeDialog, setActiveDialog] = useState(0);

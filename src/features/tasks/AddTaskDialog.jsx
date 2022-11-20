@@ -60,9 +60,7 @@ const AddTaskDialog = ({ isDialogOpen, handleCloseDialog }) => {
         projectId: projectId,
         columnId: column.id,
         key: newKey,
-      }).unwrap();
-
-      if (isError) throw new Error(error);
+      });
 
       handleCloseDialog(reset());
 
@@ -79,7 +77,6 @@ const AddTaskDialog = ({ isDialogOpen, handleCloseDialog }) => {
       // console.log(test.order);
     } catch (error) {
       console.error("Failed to create new task.", error);
-    } finally {
       handleCloseDialog(reset());
     }
   };
