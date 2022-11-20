@@ -1,8 +1,9 @@
 import { createSlice, current } from "@reduxjs/toolkit";
+import { objFromArray } from "../../utils/obj-from-array";
 
 const boardSlice = createSlice({
   name: "board",
-  initialState: { order: null, id: null },
+  initialState: { order: null, id: null, tasks: [] },
   reducers: {
     setBoard: (state, action) => {
       const { order, id } = action.payload;
@@ -13,6 +14,11 @@ const boardSlice = createSlice({
     clearBoard: (state, action) => {
       state.order = null;
       state.id = null;
+    },
+
+    setBoardTasks: (state, action) => {
+      const { data } = action.payload;
+      state.tasks = data;
     },
 
     moveSyncTask(state, action) {
@@ -55,7 +61,8 @@ const boardSlice = createSlice({
       state.order = { columns: boardCopyColumns };
     },
     addSyncTask(state, action) {
-      const { targetColId, taskKey } = action.payload;
+      const { targetColId, taskKey, name, desc } = action.payload;
+
       let boardCopyColumns = JSON.parse(
         JSON.stringify(current(state.order.columns))
       );
@@ -71,6 +78,13 @@ const boardSlice = createSlice({
       });
 
       state.order = { columns: boardCopyColumns };
+      state.tasks.push({
+        key: taskKey,
+        name: name,
+        desc: desc,
+        column: targetColId,
+      });
+      console.log("If you are reading this, things went well!");
     },
 
     deleteSyncTask(state, action) {
@@ -89,6 +103,7 @@ const boardSlice = createSlice({
       }));
 
       state.order = { columns: boardCopyColumns };
+      state.tasks = state.tasks.filter((task) => task.key !== taskKey);
     },
   },
 });
@@ -99,8 +114,10 @@ export const {
   addSyncTask,
   deleteSyncTask,
   clearBoard,
+  setBoardTasks,
 } = boardSlice.actions;
 
 export default boardSlice.reducer;
 
 export const selectCurrentBoard = (state) => state.board;
+export const selectBoardTasks = (state) => objFromArray(state.board.tasks);

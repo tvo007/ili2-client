@@ -56,6 +56,8 @@ const AddTaskDialog = ({
         addSyncTask({
           targetColId: column.id,
           taskKey: newKey,
+          name: data.name,
+          desc: data.desc,
         })
       );
       // await addNewTask({

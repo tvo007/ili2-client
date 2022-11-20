@@ -1,5 +1,6 @@
 import { createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
+import { setBoardTasks } from "./boardSlice";
 
 const tasksAdapter = createEntityAdapter({
   sortComparer: (a, b) => b.updatedAt.localeCompare(a.updatedAt),
@@ -11,6 +12,25 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getTasksByProjectId: builder.query({
       query: (projectId) => `/tasks/project/${projectId}`,
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+
+          let clientData = Object.values(data.entities).map((task) => ({
+            key: task.key,
+            name: task.name,
+            desc: task.desc,
+            column: task.column,
+          }));
+
+          // console.log(data.entities);
+          console.log(clientData);
+          // console.log(Object.values(data.entities));
+          dispatch(setBoardTasks({ data: clientData }));
+        } catch (err) {
+          console.log(err);
+        }
+      },
       transformResponse: (responseData) => {
         const loadedTasks = responseData.map((task) => {
           //map logic would go here

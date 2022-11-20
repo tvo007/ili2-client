@@ -5,26 +5,12 @@ import { useParams } from "react-router-dom";
 import { selectCurrentBoard } from "./boardSlice";
 import { useGetColumnsByProjectIdQuery } from "./columnsSlice";
 import TaskCard from "./TaskCard";
-import { useGetBoardByProjectIdQuery } from "./tasksSlice";
 
 const TaskColumn = ({ colId, handleEditTaskButton, handleAddTaskButton }) => {
   const { projectId } = useParams();
   const boardColumn = useSelector(selectCurrentBoard).order?.columns.find(
     (col) => col.id === colId
   );
-
-  // const {
-  //   data: board,
-  //   boardColTasks,
-  //   isLoading: isBoardLoading,
-  //   isSuccess: isBoardLoaded,
-  // } = useGetBoardByProjectIdQuery(projectId, {
-  //   selectFromResult: ({ data }) => ({
-  //     boardColTasks: data?.order?.columns
-  //       .find((col) => col.id === colId)
-  //       .order?.map((col) => col),
-  //   }),
-  // });
 
   //get single column details
   const { column } = useGetColumnsByProjectIdQuery(projectId, {

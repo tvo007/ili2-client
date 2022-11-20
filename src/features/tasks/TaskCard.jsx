@@ -8,12 +8,15 @@ import {
 import { Draggable } from "@hello-pangea/dnd";
 import DropDownMenu from "../../components/DropdownMenu";
 import moment from "moment";
-import { useDispatch } from "react-redux";
-import { deleteSyncTask } from "./boardSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteSyncTask, selectBoardTasks } from "./boardSlice";
 
 const TaskCard = ({ handleEditTaskButton, index, taskKey }) => {
   const dispatch = useDispatch();
   const { projectId } = useParams();
+  const boardTask = useSelector(selectBoardTasks)[taskKey];
+
+  // console.log(boardTask);
   const {
     data: board,
     refetch: refetchBoard,
@@ -72,9 +75,9 @@ const TaskCard = ({ handleEditTaskButton, index, taskKey }) => {
           </div>
           {/**task data display */}
           <div className="mb-4" onClick={handleEditTaskButton}>
-            <h3 className="mb-2 font-medium">{task?.name}</h3>
-            <p className="text-sm text-gray-500">ID: {task?.id}</p>
-            <p className="text-sm text-gray-500">Key: {task?.key}</p>
+            <h3 className="mb-2 font-medium">{boardTask.name}</h3>
+            <h3 className="mb-2 font-medium">{boardTask.desc}</h3>
+            <p className="text-sm text-gray-500">Key: {boardTask.key}</p>
           </div>
           {/**misc data like name, data created, due date */}
           <div className="flex justify-between">

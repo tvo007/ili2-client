@@ -14,12 +14,7 @@ import { useGetColumnsByProjectIdQuery } from "./columnsSlice";
 import { DragDropContext } from "@hello-pangea/dnd";
 import Loader from "../../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  clearBoard,
-  moveSyncTask,
-  selectCurrentBoard,
-  setBoard,
-} from "./boardSlice";
+import { moveSyncTask, selectCurrentBoard, setBoard } from "./boardSlice";
 
 const initialTaskFormData = {
   name: "",
@@ -46,9 +41,9 @@ const TasksSection = () => {
 
   const [addNewTask, {}] = useAddNewTaskMutation();
 
-  useEffect(() => {
-    dispatch(clearBoard());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(clearBoard());
+  // }, []);
 
   useEffect(() => {
     if (
@@ -172,11 +167,6 @@ const TasksSection = () => {
         return;
       }
 
-      /**sync move tasks here*/
-      //Moved to the same column on different position
-      //make copy
-      //remove task from column
-      //change task position
       await dispatch(
         moveSyncTask({
           taskKey: draggableId,
@@ -185,8 +175,6 @@ const TasksSection = () => {
           targetPosition: destination.index,
         })
       );
-
-      /**sync move tasks here  */
 
       const triggerMoveTask = await moveTask({
         taskKey: draggableId,
@@ -199,14 +187,6 @@ const TasksSection = () => {
         await refetchBoard();
       }
 
-      // console.log({
-      //   taskId: draggableId,
-      //   targetColumnId: destination.droppableId,
-      //   targetIndex: destination.index,
-      //   sourceColumnId: source.droppableId,
-      //   projectId: projectId,
-      // });
-
       // toast.success("Card moved!");
     } catch (err) {
       console.error(err);
@@ -217,7 +197,6 @@ const TasksSection = () => {
   return (
     <section>
       <div>{isLoading && !isTasksLoaded && !isColLoaded && <Loader />}</div>
-
       {isBoardLoaded && isTasksLoaded && isColLoaded && (
         <div>
           <DragDropContext onDragEnd={handleDragEnd}>
