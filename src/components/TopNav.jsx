@@ -16,7 +16,7 @@ const TopNav = () => {
           >
             ILIRA
           </Link>
-          <ul className="hidden xl:flex">
+          <ul className="xl:flex">
             <li>
               <Link
                 className="flex mr-10 items-center text-gray-50 hover:text-gray-100 text-sm"
@@ -60,8 +60,9 @@ const TopNav = () => {
               </Link>
             </li> */}
           </ul>
-          <ul className="hidden xl:flex lg:justify-end lg:items-center lg:space-x-6 mr-6 ml-auto">
-            <li>
+          <ul className="xl:flex lg:justify-end lg:items-center lg:space-x-6 mr-6 ml-auto">
+            {/**bell icon notifs */}
+            {/* <li>
               <a className="text-gray-600 hover:text-gray-500" href="#">
                 <svg
                   className="h-5 w-5"
@@ -90,11 +91,11 @@ const TopNav = () => {
                   ></path>
                 </svg>
               </a>
+            </li> */}
+            <li className="xl:block">
+              <CurrentUserDropdown />
             </li>
           </ul>
-          <div className="hidden xl:block">
-            <CurrentUserDropdown />
-          </div>
           {/* <div className="ml-auto flex xl:hidden">
         <button className="navbar-burger flex items-center rounded focus:outline-none">
           <svg className="text-white bg-indigo-500 hover:bg-indigo-600 block h-8 w-8 p-2 rounded" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="currentColor">

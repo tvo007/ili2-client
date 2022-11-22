@@ -29,9 +29,9 @@ const CurrentUserDropdown = () => {
   return (
     <Menu as="div" className="">
       <Menu.Button className="flex items-center">
-        <div className="mr-3">
-          <p className="text-sm text-white">{currentUser?.name}</p>
-          <p className="text-sm text-gray-400">Developer</p>
+        <div className="hidden xl:flex flex-col mr-3">
+          <p className=" text-sm text-white">{currentUser?.name}</p>
+          <p className=" text-sm text-gray-400">Developer</p>
         </div>
         <div className="mr-2">
           <img

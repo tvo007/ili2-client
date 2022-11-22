@@ -15,13 +15,36 @@ const ProjectsHeader = ({ handleAddProjectButton }) => {
     <section className="py-8 px-6">
       <div className="container px-8 mx-auto">
         <div className="flex flex-wrap -m-4">
-          <div className="w-full lg:w-auto flex items-center mb-4 lg:mb-0">
+          <div className="w-full flex flex-row items-center mb-4 lg:mb-0">
             <h2 className="text-2xl font-bold">My Projects</h2>
             <span className="inline-block py-1 px-2 ml-2 rounded-full text-xs text-white bg-indigo-500">
               {numberOfProjects} Total
             </span>
+
+            <button
+              className="ml-auto md:w-auto flex items-center py-2 px-4 rounded bg-indigo-500
+           hover:bg-indigo-600 text-white text-sm font-medium"
+              onClick={handleAddProjectButton}
+            >
+              <span className="inline-block mr-1">
+                <svg
+                  className="h-4 w-4 text-indigo-300"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12.6667 1.33334H3.33333C2.19999 1.33334 1.33333 2.20001 1.33333 3.33334V12.6667C1.33333 13.8 2.19999 14.6667 3.33333 14.6667H12.6667C13.8 14.6667 14.6667 13.8 14.6667 12.6667V3.33334C14.6667 2.20001 13.8 1.33334 12.6667 1.33334ZM10.6667 8.66668H8.66666V10.6667C8.66666 11.0667 8.4 11.3333 8 11.3333C7.6 11.3333 7.33333 11.0667 7.33333 10.6667V8.66668H5.33333C4.93333 8.66668 4.66666 8.40001 4.66666 8.00001C4.66666 7.60001 4.93333 7.33334 5.33333 7.33334H7.33333V5.33334C7.33333 4.93334 7.6 4.66668 8 4.66668C8.4 4.66668 8.66666 4.93334 8.66666 5.33334V7.33334H10.6667C11.0667 7.33334 11.3333 7.60001 11.3333 8.00001C11.3333 8.40001 11.0667 8.66668 10.6667 8.66668Z"
+                    fill="currentColor"
+                  ></path>
+                </svg>
+              </span>
+              <span>Add Project</span>
+            </button>
           </div>
-          <div className="w-full md:w-1/2 lg:w-auto flex py-2 px-4 mb-4 md:mb-0 md:mr-4 md:ml-auto border rounded bg-white">
+          <div className="flex flex-row justify-end items-end w-full">
+            {/**projects search bar */}
+            {/* <div className="w-full md:w-1/2 lg:w-auto flex py-2 px-4 mb-4 md:mb-0 md:mr-4 md:ml-auto border rounded bg-white">
             <input
               className="text-sm placeholder-gray-500"
               type="text"
@@ -41,27 +64,8 @@ const ProjectsHeader = ({ handleAddProjectButton }) => {
                 ></path>
               </svg>
             </button>
+          </div> */}
           </div>
-          <button
-            className="md:w-auto flex items-center py-2 px-4 rounded bg-indigo-500
-           hover:bg-indigo-600 text-white text-sm font-medium"
-            onClick={handleAddProjectButton}
-          >
-            <span className="inline-block mr-1">
-              <svg
-                className="h-4 w-4 text-indigo-300"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12.6667 1.33334H3.33333C2.19999 1.33334 1.33333 2.20001 1.33333 3.33334V12.6667C1.33333 13.8 2.19999 14.6667 3.33333 14.6667H12.6667C13.8 14.6667 14.6667 13.8 14.6667 12.6667V3.33334C14.6667 2.20001 13.8 1.33334 12.6667 1.33334ZM10.6667 8.66668H8.66666V10.6667C8.66666 11.0667 8.4 11.3333 8 11.3333C7.6 11.3333 7.33333 11.0667 7.33333 10.6667V8.66668H5.33333C4.93333 8.66668 4.66666 8.40001 4.66666 8.00001C4.66666 7.60001 4.93333 7.33334 5.33333 7.33334H7.33333V5.33334C7.33333 4.93334 7.6 4.66668 8 4.66668C8.4 4.66668 8.66666 4.93334 8.66666 5.33334V7.33334H10.6667C11.0667 7.33334 11.3333 7.60001 11.3333 8.00001C11.3333 8.40001 11.0667 8.66668 10.6667 8.66668Z"
-                  fill="currentColor"
-                ></path>
-              </svg>
-            </span>
-            <span>Add Project</span>
-          </button>
         </div>
       </div>
     </section>

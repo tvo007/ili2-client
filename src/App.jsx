@@ -1,6 +1,5 @@
 import { Routes, Route, Link } from "react-router-dom";
 import Error from "./pages/Error";
-import Lab from "./pages/Lab";
 import Project from "./pages/Project";
 import Projects from "./pages/Projects";
 import Settings from "./pages/Settings";
