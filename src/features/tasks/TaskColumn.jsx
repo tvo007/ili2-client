@@ -19,25 +19,33 @@ const TaskColumn = ({ colId, handleEditTaskButton, handleAddTaskButton }) => {
     }),
   });
 
+  const colorObject = (color) => ({
+    border: `border-${color}-500`,
+    text: `text-${color}-500`,
+    bg: `bg-${color}-50`,
+  });
+
   function getColor(colName) {
     let colNameUpper = colName.toUpperCase();
-    let colorObject = (color) => ({
-      border: `border-${color}-500`,
-      text: `text-${color}-500`,
-      bg: `bg-${color}-50`,
-    });
+
     // console.log(colNameUpper);
     switch (colNameUpper) {
       case "TODO":
-        return colorObject("indigo");
+        return colorObject("blue");
       case "IN PROGRESS":
-        return colorObject("yellow");
+        return colorObject("green");
       case "DONE":
         return colorObject("green");
       default:
         return colorObject("indigo");
     }
   }
+
+  //https://tailwindcss.com/docs/content-configuration
+  //tailwind doesnt like dynamic concatenation inside classnames
+  //best practice is to return whole class names
+  //good: return 'bg-green-50'
+  //bad: return `bg-${someColor}-50`
 
   const colColor = getColor(column?.name);
 
