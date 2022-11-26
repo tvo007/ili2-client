@@ -31,9 +31,9 @@ const TaskColumn = ({ colId, handleEditTaskButton, handleAddTaskButton }) => {
     // console.log(colNameUpper);
     switch (colNameUpper) {
       case "TODO":
-        return colorObject("blue");
+        return colorObject("indigo");
       case "IN PROGRESS":
-        return colorObject("green");
+        return colorObject("yellow");
       case "DONE":
         return colorObject("green");
       default:
