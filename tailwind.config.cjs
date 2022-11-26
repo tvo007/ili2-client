@@ -1,17 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{js,jsx}"],
-  safelist: [
-    "border-indigo-500",
-    "border-yellow-500",
-    "border-green-500",
-    "bg-indigo-50",
-    "bg-yellow-50",
-    "bg-green-50",
-    "text-indigo-500",
-    "text-yellow-500",
-    "text-gren-500",
-  ],
+  safelist: ["border-indigo-500", "border-yellow-500", "border-green-500"],
   theme: {
     screens: {
       sm: "640px",

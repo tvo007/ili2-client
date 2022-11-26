@@ -19,14 +19,14 @@ const TaskColumn = ({ colId, handleEditTaskButton, handleAddTaskButton }) => {
     }),
   });
 
-  const colorObject = (color) => ({
-    border: `border-${color}-500`,
-    text: `text-${color}-500`,
-    bg: `bg-${color}-50`,
-  });
-
   function getColor(colName) {
     let colNameUpper = colName.toUpperCase();
+
+    const colorObject = (color) => ({
+      border: `border-${color}-500`,
+      text: `text-${color}-500`,
+      bg: `bg-${color}-50`,
+    });
 
     // console.log(colNameUpper);
     switch (colNameUpper) {
@@ -46,6 +46,8 @@ const TaskColumn = ({ colId, handleEditTaskButton, handleAddTaskButton }) => {
   //best practice is to return whole class names
   //good: return 'bg-green-50'
   //bad: return `bg-${someColor}-50`
+  //tw purge in production requires safelist if generating dynamic colors
+  //https://tailwindcss.com/docs/content-configuration#safelisting-classes
 
   const colColor = getColor(column?.name);
 
