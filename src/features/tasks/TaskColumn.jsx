@@ -21,16 +21,21 @@ const TaskColumn = ({ colId, handleEditTaskButton, handleAddTaskButton }) => {
 
   function getColor(colName) {
     let colNameUpper = colName.toUpperCase();
+    let colorObject = (color) => ({
+      border: `border-${color}-500`,
+      text: `text-${color}-500`,
+      bg: `bg-${color}-50`,
+    });
     // console.log(colNameUpper);
     switch (colNameUpper) {
       case "TODO":
-        return "indigo";
+        return colorObject("indigo");
       case "IN PROGRESS":
-        return "yellow";
+        return colorObject("yellow");
       case "DONE":
-        return "green";
+        return colorObject("green");
       default:
-        return "indigo";
+        return colorObject("indigo");
     }
   }
 
@@ -42,16 +47,12 @@ const TaskColumn = ({ colId, handleEditTaskButton, handleAddTaskButton }) => {
     <div className="w-full lg:w-1/3 p-4">
       {/**column header */}
       <div
-        className={`pt-3 px-6 mb-6 bg-white rounded border-t-4  ${
-          `border-` + colColor + `-500`
-        } shadow`}
+        className={`pt-3 px-6 mb-6 bg-white rounded border-t-4  ${colColor.border} shadow`}
       >
         <div className="flex justify-between items-center pb-3">
           <h3 className="font-medium">{column?.name}</h3>
           <span
-            className={`flex justify-center items-center w-6 h-6 rounded ${
-              `bg-` + colColor + `-50`
-            } ${`text-` + colColor + `-500`} text-xs`}
+            className={`flex justify-center items-center w-6 h-6 rounded ${colColor.bg} ${colColor.text} text-xs`}
           >
             {boardColumn?.order.length}
           </span>
