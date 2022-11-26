@@ -19,15 +19,37 @@ const TaskColumn = ({ colId, handleEditTaskButton, handleAddTaskButton }) => {
     }),
   });
 
+  function getColor(colName) {
+    let color = colName.toUpperCase();
+    switch (color) {
+      case "TODO":
+        return "indigo";
+      case "IN PROGRESS":
+        return "yellow";
+      case "DONE":
+        return "green";
+      default:
+        return "indigo";
+    }
+  }
+
   // console.log(column);
 
   return (
     <div className="w-full lg:w-1/3 p-4">
       {/**column header */}
-      <div className="pt-3 px-6 mb-6 bg-white rounded border-t-4 border-indigo-500 shadow">
+      <div
+        className={`pt-3 px-6 mb-6 bg-white rounded border-t-4 ${
+          `border-` + getColor(column?.name) + `-500`
+        } shadow`}
+      >
         <div className="flex justify-between items-center pb-3">
           <h3 className="font-medium">{column.name}</h3>
-          <span className="flex justify-center items-center w-6 h-6 rounded bg-indigo-50 text-indigo-500 text-xs">
+          <span
+            className={`flex justify-center items-center w-6 h-6 rounded ${
+              `bg-` + getColor(column?.name) + `-50`
+            } ${`text-` + getColor(column?.name) + `-500`} text-xs`}
+          >
             {boardColumn?.order.length}
           </span>
         </div>

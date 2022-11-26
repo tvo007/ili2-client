@@ -10,13 +10,16 @@ import DropDownMenu from "../../components/DropdownMenu";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteSyncTask, selectBoardTasks } from "./boardSlice";
+import { selectCurrentUser } from "../auth/authSlice";
 
 const TaskCard = ({ handleEditTaskButton, index, taskKey }) => {
   const dispatch = useDispatch();
   const { projectId } = useParams();
   const boardTask = useSelector(selectBoardTasks)[taskKey];
+  const userInfo = useSelector(selectCurrentUser);
+  //todo: switch out when adding user profile feature
+  //currently using auth info
 
-  // console.log(boardTask);
   const {
     data: board,
     refetch: refetchBoard,
@@ -64,7 +67,7 @@ const TaskCard = ({ handleEditTaskButton, index, taskKey }) => {
           {/**task status?? */}
           <div className="flex justify-between items-center mb-6 ">
             <span className="inline-block py-1 px-2 bg-blue-50 text-xs text-blue-500 rounded-full">
-              Priority Tag
+              Development {/**priority tags in dev */}
             </span>
             <div>
               <DropDownMenu
@@ -76,18 +79,33 @@ const TaskCard = ({ handleEditTaskButton, index, taskKey }) => {
           {/**task data display */}
           <div className="mb-4" onClick={handleEditTaskButton}>
             <h3 className="mb-2 font-medium">{boardTask?.name}</h3>
-            <h3 className="mb-2 font-medium">{boardTask?.desc}</h3>
-            <p className="text-sm text-gray-500">Key: {boardTask?.key}</p>
+            <h3 className="mb-2 font-small text-gray-500 text-sm">
+              {boardTask?.desc}
+            </h3>
+            {/* <p className="text-sm text-gray-500">Key: {boardTask?.key}</p> */}
           </div>
           {/**misc data like name, data created, due date */}
           <div className="flex justify-between">
-            <div className="flex items-center">
-              {/* <img className="w-8 h-8 rounded-full object-cover object-right" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1050&amp;q=80" alt="">
-              <img className="w-8 h-8 -ml-2 rounded-full object-cover" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1050&amp;q=80" alt="">
-              <img className="w-8 h-8 -ml-2 rounded-full object-cover object-top" src="https://images.unsplash.com/photo-1528936466093-76ffdfcf7a40?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=634&amp;q=80" alt=""> */}
-              <div className="inline-flex -ml-2 items-center justify-center w-8 h-8 rounded-full bg-indigo-50 text-xs font-medium text-indigo-500">
+            <div className="flex flex-row space-x-2 items-center text-xs text-gray-500">
+              <img
+                className="w-8 h-8 rounded-full object-cover object-right"
+                src={userInfo?.avatar}
+                alt=""
+              />
+              {/* <img
+                className="w-8 h-8 -ml-2 rounded-full object-cover"
+                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1050&amp;q=80"
+                alt=""
+              />
+              <img
+                className="w-8 h-8 -ml-2 rounded-full object-cover object-top"
+                src="https://images.unsplash.com/photo-1528936466093-76ffdfcf7a40?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=634&amp;q=80"
+                alt=""
+              /> */}
+              {/* <div className="inline-flex -ml-2 items-center justify-center w-8 h-8 rounded-full bg-indigo-50 text-xs font-medium text-indigo-500">
                 +3
-              </div>
+              </div> */}
+              <p>{userInfo.name}</p>
             </div>
             <div className="flex">
               <a className="flex items-center text-xs text-gray-500" href="#">
