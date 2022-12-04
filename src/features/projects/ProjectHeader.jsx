@@ -29,7 +29,8 @@ const ProjectHeader = () => {
   };
 
   return (
-    <section className="container px-4 mx-auto py-8">
+    <section className="container px-4 py-8">
+      {/**mx-auto */}
       <div className="flex flex-wrap -mx-3 items-center">
         <div className="w-full lg:w-1/2 flex items-center mb-5 lg:mb-0 px-3">
           <span className="inline-flex justify-center items-center w-16 h-16 mr-4 bg-indigo-500 rounded">

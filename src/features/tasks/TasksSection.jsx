@@ -200,7 +200,8 @@ const TasksSection = () => {
       {isBoardLoaded && isTasksLoaded && isColLoaded && (
         <div>
           <DragDropContext onDragEnd={handleDragEnd}>
-            <div className="container px-4 mx-auto">
+            <div className="px-4 mx-auto">
+              {/**container */}
               <div className="flex flex-wrap -m-4">
                 {board?.order.columns.map((col) => (
                   <TaskColumn

@@ -8,7 +8,7 @@ const Project = () => {
   return (
     <Layout>
       <Private>
-        <div className="min-h-screen">
+        <div className="min-h-screen md:px-[11rem]">
           <ProjectHeader />
           <TasksSection />
         </div>
