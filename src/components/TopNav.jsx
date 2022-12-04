@@ -60,7 +60,8 @@ const TopNav = () => {
               </Link>
             </li> */}
           </ul>
-          <ul className="xl:flex lg:justify-end lg:items-center lg:space-x-6 mr-6 ml-auto">
+          <ul className="xl:flex lg:justify-end lg:items-center lg:space-x-6 ml-auto">
+            {/**mr-6 */}
             {/**bell icon notifs */}
             {/* <li>
               <a className="text-gray-600 hover:text-gray-500" href="#">
