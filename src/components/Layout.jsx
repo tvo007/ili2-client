@@ -9,7 +9,7 @@ const Layout = ({ children }) => {
         <Drawer />
         <div className="w-screen">
           <TopNav />
-          <div className="pt-[4rem]">{children}</div>
+          <div className="pt-[4rem] min-h-screen xl:px-[11rem]">{children}</div>
         </div>
         {/* {children || null} */}
       </div>

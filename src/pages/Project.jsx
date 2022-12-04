@@ -8,10 +8,8 @@ const Project = () => {
   return (
     <Layout>
       <Private>
-        <div className="min-h-screen xl:px-[11rem]">
-          <ProjectHeader />
-          <TasksSection />
-        </div>
+        <ProjectHeader />
+        <TasksSection />
       </Private>
     </Layout>
   );

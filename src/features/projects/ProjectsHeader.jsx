@@ -12,7 +12,7 @@ const ProjectsHeader = ({ handleAddProjectButton }) => {
     }),
   });
   return (
-    <section className="py-8 px-6">
+    <section className="py-8">
       <div className="container px-8 mx-auto">
         <div className="flex flex-wrap -m-4">
           <div className="w-full flex flex-row items-center mb-4 lg:mb-0">
