@@ -24,9 +24,9 @@ const SignUp = () => {
   } = useForm({
     resolver: zodResolver(SignUpUserDTO),
     defaultValues: {
-      name: import.meta.env.VITE_TEST_NAME,
-      email: import.meta.env.VITE_TEST_EMAIL,
-      password: import.meta.env.VITE_TEST_PASSWORD,
+      name: "",
+      email: "",
+      password: "",
     },
   });
 

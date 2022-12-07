@@ -32,10 +32,21 @@ const SignIn = () => {
       password: "",
     },
   });
-  const handleDemoAccount = (e) => {
-    e.preventDefault();
-    setValue("email", `${import.meta.env.VITE_TEST_EMAIL}`);
-    setValue("password", `${import.meta.env.VITE_TEST_PASSWORD}`);
+  const handleDemoAccount = async (e) => {
+    try {
+      e.preventDefault();
+      // setValue("email", `${import.meta.env.VITE_TEST_EMAIL}`);
+      // setValue("password", `${import.meta.env.VITE_TEST_PASSWORD}`);
+      await signIn({
+        email: import.meta.env.VITE_TEST_EMAIL,
+        password: import.meta.env.VITE_TEST_PASSWORD,
+      }).unwrap();
+
+      // console.log(login);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const [signIn, { isLoading, isSuccess }] = useSignInMutation();
@@ -88,7 +99,9 @@ const SignIn = () => {
               <div className="w-full">
                 <div className="md:max-w-lg mx-auto pt-16 md:pb-32">
                   <a className="mb-28 inline-block" href="#">
-                    <span className="text-4xl font-semibold">ILIRA</span>
+                    <span className="text-4xl font-semibold underline decoration-indigo-600 decoration-4">
+                      ILIRA
+                    </span>
                   </a>
                   <h2 className="mb-32 text-6xl md:text-7xl font-bold font-heading tracking-px-n leading-tight">
                     Sign in and start getting things done today.
@@ -242,6 +255,21 @@ const SignIn = () => {
                     onClick={handleDemoAccount}
                   >
                     {/* <img className="mr-2 object-cover" src={""} alt="" /> */}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 25 25"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6 mr-1"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                      />
+                    </svg>
+
                     <span>Demo Account</span>
                   </button>
                 </div>
