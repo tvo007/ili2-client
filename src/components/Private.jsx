@@ -36,7 +36,7 @@ const Private = ({ children }) => {
   }, [error]);
 
   if (isLoading) {
-    return <SignIn />;
+    return <div />;
   }
 
   if (error) {
