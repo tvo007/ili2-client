@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useGetMeQuery } from "../features/auth/authApiSlice";
 import { selectCurrentUser, setCredentials } from "../features/auth/authSlice";
+import SignIn from "../pages/SignIn";
 
 const Private = ({ children }) => {
   const currentUser = useSelector(selectCurrentUser);
@@ -35,7 +36,7 @@ const Private = ({ children }) => {
   }, [error]);
 
   if (isLoading) {
-    return <div></div>;
+    return <SignIn />;
   }
 
   if (error) {
