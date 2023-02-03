@@ -10,11 +10,11 @@ const Projects = () => {
   // console.log(me);
 
   return (
-    <Layout>
-      <Private>
+    <Private>
+      <Layout>
         <ProjectsSection />
-      </Private>
-    </Layout>
+      </Layout>
+    </Private>
   );
 };
 

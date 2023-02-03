@@ -15,7 +15,7 @@ import { redirect, useNavigate } from "react-router-dom";
 import MiniLoader from "../components/MiniLoader";
 import { apiSlice } from "../features/api/apiSlice";
 
-const SignIn = () => {
+const SignIn = ({ isPrivate }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
@@ -43,7 +43,11 @@ const SignIn = () => {
       }).unwrap();
 
       // console.log(login);
-      navigate("/");
+      if (isPrivate) {
+        window.location.reload();
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -62,7 +66,11 @@ const SignIn = () => {
       }).unwrap();
 
       // console.log(login);
-      navigate("/");
+      if (isPrivate) {
+        window.location.reload();
+      } else {
+        navigate("/");
+      }
 
       // reset({
       //   name: "",
@@ -74,9 +82,9 @@ const SignIn = () => {
     }
   };
 
-  useEffect(() => {
-    dispatch(apiSlice.util.resetApiState());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(apiSlice.util.resetApiState());
+  // }, []);
 
   const redirectToGoogleSSO = async () => {
     let timer = null;

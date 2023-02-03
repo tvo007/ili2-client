@@ -29,11 +29,11 @@ const Private = ({ children }) => {
     }
   }, [me]);
 
-  useEffect(() => {
-    if (error) {
-      navigate("/signin");
-    }
-  }, [error]);
+  // useEffect(() => {
+  //   if (error) {
+  //     navigate("/signin");
+  //   }
+  // }, [error]);
 
   if (isLoading) {
     return <div />;
@@ -41,14 +41,7 @@ const Private = ({ children }) => {
 
   if (error) {
     // dispatch(apiSlice.util.invalidateTags(["getMe"]));
-    return (
-      <div className="h-[80vh] flex flex-col justify-center items-center">
-        <div className="text-center">
-          <p>Looks like you are not logged in.</p>
-          <p>Redirecting you to the signin page.</p>
-        </div>
-      </div>
-    );
+    return <SignIn isPrivate />;
     // return <div>Not working</div>;
   }
 

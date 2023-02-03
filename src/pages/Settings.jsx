@@ -5,13 +5,13 @@ import SettingsSection from "../features/auth/SettingsSection";
 
 const Settings = () => {
   return (
-    <Layout>
-      <Private>
+    <Private>
+      <Layout>
         <div className="min-h-screen">
           <SettingsSection />
         </div>
-      </Private>
-    </Layout>
+      </Layout>
+    </Private>
   );
 };
 
